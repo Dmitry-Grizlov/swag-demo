@@ -12,7 +12,6 @@ import (
 
 	models "github.com/Dmitry-Grizlov/swag-demo/models"
 	"github.com/gorilla/mux"
-	"github.com/rs/cors"
 	httpSwagger "github.com/swaggo/http-swagger"
 )
 
@@ -23,13 +22,13 @@ var GlobalItemsList = []models.Item{
 	},
 }
 
-// @title Project Name
-// @version 0.0.1
-// @host localhost:3000
-// @BasePath /
-// @contact.name company_name
-// @contact.url http://www.link-to-support.io/support
-// @contact.email some.company.name@company.domain.com
+// @title			Project Name
+// @version		0.0.1
+// @host			localhost:3000
+// @BasePath		/
+// @contact.name	company_name
+// @contact.url	http://www.link-to-support.io/support
+// @contact.email	some.company.name@company.domain.com
 func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/list", list)
@@ -45,23 +44,16 @@ func main() {
 		httpSwagger.DomID("swagger-ui"),
 	))
 
-	c := cors.New(cors.Options{
-		AllowedOrigins:   []string{"*"},
-		AllowCredentials: true,
-	})
-
-	handler := c.Handler(r)
-
-	log.Fatal(http.ListenAndServe(":3000", handler))
+	log.Fatal(http.ListenAndServe(":3000", r))
 }
 
-// @title list godoc
-// @Summary      list items
-// @Description  list all items from global var
-// @Tags         items
-// @Produce      json
-// @Success      200  {object}  []models.Item
-// @Router       /list [get]“
+// @title			list godoc
+// @Summary		list items
+// @Description	list all items from global var
+// @Tags			items
+// @Produce		json
+// @Success		200	{object}	[]models.Item
+// @Router			/list [get]“
 func list(w http.ResponseWriter, r *http.Request) {
 	obj := GlobalItemsList
 	ret, err := json.Marshal(obj)
@@ -73,14 +65,14 @@ func list(w http.ResponseWriter, r *http.Request) {
 	w.Write(ret)
 }
 
-// @title one godoc
-// @Summary      single item
-// @Description  returns item with input id from global var
-// @Tags         items
-// @Produce      json
-// @Success      200  {object}  models.Item
-// @Router       /list/{id} [get]“
-// @Param 		 id    path 	int 	true 	"Id of the item"
+// @title			one godoc
+// @Summary		single item
+// @Description	returns item with input id from global var
+// @Tags			items
+// @Produce		json
+// @Success		200	{object}	models.Item
+// @Router			/list/{id} [get]“
+// @Param			id	path	int	true	"Id of the item"
 func one(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	itemID := vars["id"]
@@ -117,15 +109,15 @@ func one(w http.ResponseWriter, r *http.Request) {
 	w.Write(ret)
 }
 
-// @title update godoc
-// @Summary      updates item
-// @Description  updates item from global var
-// @Tags         items
-// @Produce      json
-// @Success      200  {string}  string
-// @Router       /update/{id}/{val} [get]“
-// @Param 		 id    path 	int 	true 	"Id of the item"
-// @Param 		 val   path 	string 	true 	"value of the item"
+// @title			update godoc
+// @Summary		updates item
+// @Description	updates item from global var
+// @Tags			items
+// @Produce		json
+// @Success		200	{string}	string
+// @Router			/update/{id}/{val} [get]“
+// @Param			id	path	int		true	"Id of the item"
+// @Param			val	path	string	true	"value of the item"
 func update(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	itemID := vars["id"]
@@ -165,13 +157,13 @@ func update(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("Updated!"))
 }
 
-// @title add godoc
-// @Summary      adds item
-// @Description  adds item to global var
-// @Tags         items
-// @Produce      json
-// @Success      200  {string}  string
-// @Router       /add [get]“
+// @title			add godoc
+// @Summary		adds item
+// @Description	adds item to global var
+// @Tags			items
+// @Produce		json
+// @Success		200	{string}	string
+// @Router			/add [get]“
 func add(w http.ResponseWriter, r *http.Request) {
 	id := rand.Intn(100)
 
@@ -183,14 +175,14 @@ func add(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("Added"))
 }
 
-// @title delete godoc
-// @Summary      deletes item
-// @Description  deletes item from global var with input id
-// @Tags         items
-// @Produce      json
-// @Success      200  {string}  string
-// @Router       /delete/{id} [get]“
-// @Param 		 id    path 	int 	true 	"Id of the item"
+// @title			delete godoc
+// @Summary		deletes item
+// @Description	deletes item from global var with input id
+// @Tags			items
+// @Produce		json
+// @Success		200	{string}	string
+// @Router			/delete/{id} [get]“
+// @Param			id	path	int	true	"Id of the item"
 func delete(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	itemID := vars["id"]
@@ -225,13 +217,13 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("Deleted"))
 }
 
-// @title misc godoc
-// @Summary      Miscellanious action
-// @Description  Miscellanious action to be displayed in the separate method group
-// @Tags         misc
-// @Produce      json
-// @Success      200  {string}  string
-// @Router       /misc [get]“
+// @title			misc godoc
+// @Summary		Miscellanious action
+// @Description	Miscellanious action to be displayed in the separate method group
+// @Tags			misc
+// @Produce		json
+// @Success		200	{string}	string
+// @Router			/misc [get]“
 func misc(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("Misc responded with success"))
 }
