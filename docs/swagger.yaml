@@ -1,0 +1,122 @@
+basePath: /
+definitions:
+  models.Item:
+    properties:
+      id:
+        type: integer
+      value:
+        type: string
+    type: object
+host: localhost:3000
+info:
+  contact:
+    email: some.company.name@company.domain.com
+    name: company_name
+    url: http://www.link-to-support.io/support
+  title: Project Name
+  version: 0.0.1
+paths:
+  /add:
+    get:
+      description: adds item to global var
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: adds item
+      tags:
+      - items
+  /delete/{id}:
+    get:
+      description: deletes item from global var with input id
+      parameters:
+      - description: Id of the item
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: deletes item
+      tags:
+      - items
+  /list:
+    get:
+      description: list all items from global var
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Item'
+            type: array
+      summary: list items
+      tags:
+      - items
+  /list/{id}:
+    get:
+      description: returns item with input id from global var
+      parameters:
+      - description: Id of the item
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Item'
+      summary: single item
+      tags:
+      - items
+  /misc:
+    get:
+      description: Miscellanious action to be displayed in the separate method group
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Miscellanious action
+      tags:
+      - misc
+  /update/{id}/{val}:
+    get:
+      description: updates item from global var
+      parameters:
+      - description: Id of the item
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: value of the item
+        in: path
+        name: val
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: updates item
+      tags:
+      - items
+swagger: "2.0"
